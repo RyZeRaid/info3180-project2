@@ -1,6 +1,6 @@
-from distutils.archive_util import make_archive
-from pyexpat import model
 from . import db
+from datetime import datetime
+from werkzeug.security import generate_password_hash
 
 class Cars(db.Model):
 
@@ -29,3 +29,4 @@ class Cars(db.Model):
     self.price = price
     self.photo = photo
     self.user_id = user_id
+
