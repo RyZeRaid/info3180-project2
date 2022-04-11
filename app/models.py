@@ -1,1 +1,3 @@
-# Add any model classes for Flask-SQLAlchemy here
+from . import db
+from datetime import datetime
+from werkzeug.security import generate_password_hash
