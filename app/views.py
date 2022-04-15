@@ -5,11 +5,15 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
-from app import app
-from flask import render_template, request, jsonify, send_file
+from app import app, db
+from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory
 import os
-
-
+from .models import Cars
+from .forms import addCars
+from werkzeug.utils import secure_filename
+from werkzeug.security import check_password_hash
+from datetime import date, datetime
+from flask_login import login_user, logout_user, current_user, login_required
 ###
 # Routing for your application.
 ###
@@ -17,6 +21,46 @@ import os
 @app.route('/')
 def index():
     return jsonify(message="This is the beginning of our API")
+
+@app.route('/api/register',methods = ["POST","GET"])
+def register():
+    return jsonify(message="This is the register of our API")
+
+@app.route('/api/auth/login',methods = ["POST","GET"])
+def login():
+    return jsonify(message="This is the login of our API")
+
+@app.route('/api/auth/logout',methods= ["POST","GET"])
+def logout():
+    return jsonify(message="This is the logout of our API")
+
+@app.route('/api/cars')
+def showcars():
+    return jsonify(message="This is the show cars of our API")
+
+@app.route('/api/cars', methods= ["POST","GET"])
+def addcars():
+    return jsonify(message="This is the addcars of our API")
+
+@app.route('/api/cars/<int:id>',methods= ["POST","GET"])
+def viewcar(id):
+    return jsonify(message="This is the view a car of our API")
+
+@app.route('/api/cars/<int:id>/favourite',methods= ["POST","GET"])
+def addfavcar(id):
+    return jsonify(message="This is the add to favourite of our API")   
+
+@app.route('/api/cars',methods= ["POST","GET"])
+def search():
+    return jsonify(message="This is the search cars of our API")
+
+@app.route('/api/users/<int:id>',methods= ["POST","GET"])
+def viewuser(id):
+    return jsonify(message="This is the see users info of our API")
+
+@app.route('/api/users/<int:id>/favourites',methods= ["POST","GET"])
+def viewcar(id):
+    return jsonify(message="This is the get users favourite cars of our API")
 
 
 ###
