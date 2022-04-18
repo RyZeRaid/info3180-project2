@@ -12,7 +12,7 @@ export default {
             username: '',
             password: '',
             location: '',
-            message: "Hello World! This is Lab 7"
+            message: "Hello World! This is Register page"
         };
     },
     components: { RegisterForm }

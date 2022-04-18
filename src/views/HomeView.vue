@@ -1,20 +1,13 @@
 <script>
-import RegisterForm from '@/components/RegisterForm.vue'
+
 export default {
     data() {
         return {
-            csrf_token: '',
-            description: '',
-            photo: '',
-            email: '',
-            name: '',
-            username: '',
-            password: '',
-            location: '',
+            
             message: "Hello World! This is Lab 7"
         };
     },
-    components: { RegisterForm }
+    
 }
 </script>
 
@@ -24,7 +17,7 @@ export default {
         <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
         <h1>{{ message }}</h1>
         
-        <RegisterForm/>
+        
       </div>
     </div>
 </template>
