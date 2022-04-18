@@ -53,15 +53,17 @@ class Users(db.Model):
     email = db.Column(db.String(120), nullable=False)
     location = db.Column(db.String(140),nullable=False)
     biography = db.Column(db.String(800),nullable=False)
+    photo = db.Column(db.Text,nullable=False)
     date_joined = db.Column(db.DateTime, default = datetime.utcnow)
 
-    def __init__(self, username, password, email , name, location, biography):
+    def __init__(self, username, password, email , name, location, biography, photo):
         self.name = name
         self.username = username
         self.location = location
         self.email = email
         self.password = generate_password_hash(password, method='pbkdf2:sha256')
         self.biography = biography
+        self.photo = photo
 
 
     def is_authenticated(self):

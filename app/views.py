@@ -8,12 +8,14 @@ This file creates your application.
 from app import app, db
 from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory
 import os
-from .models import Cars
-from .forms import addCars
+from .models import Cars,Users
+from .forms import addCarsForm, registerForm
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash
 from datetime import date, datetime
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_wtf.csrf import generate_csrf
+
 ###
 # Routing for your application.
 ###
@@ -24,7 +26,34 @@ def index():
 
 @app.route('/api/register',methods = ["POST","GET"])
 def register():
-    return jsonify(message="This is the register of our API")
+    form = registerForm()
+    if request.method == 'POST'and form.validate_on_submit():
+        
+        description = form.description.data
+        name = form.name.data
+        location= form.location.data
+        email = form.email.data
+        username = form.username.data
+        password = form.password.data
+        photo = form.photo.data
+        filename = secure_filename(photo.filename)
+        photo.save((os.path.join(app.config['UPLOAD_FOLDER'], filename)))
+
+        
+          
+        user = Users(name = name, biography = description , password = password,
+                        email = email,location = location, username = username, photo = filename) 
+        print("before database", user)
+        db.session.add(user)
+        db.session.commit()
+        
+        flash('Successfully added a new member to the database','success')
+        return jsonify(message="This is the register of our API", filename = filename,
+                        biography = description, name=name, location= location, email= email, username=username, password=password)
+    else:
+        flash('ERROR didnt add image','danger')
+        return jsonify(errors = form_errors(form))    
+        
 
 @app.route('/api/auth/login',methods = ["POST","GET"])
 def login():
@@ -59,9 +88,12 @@ def viewuser(id):
     return jsonify(message="This is the see users info of our API")
 
 @app.route('/api/users/<int:id>/favourites',methods= ["POST","GET"])
-def viewcar(id):
+def getfavcar(id):
     return jsonify(message="This is the get users favourite cars of our API")
 
+@app.route('/api/csrf-token', methods=['GET'])
+def get_csrf():
+    return jsonify({'csrf_token': generate_csrf()})
 
 ###
 # The functions below should be applicable to all Flask apps.
@@ -69,6 +101,15 @@ def viewcar(id):
 
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
+def get_uploaded_images():
+    rootdir = os.getcwd()
+    print("this is root" ,rootdir)
+    file_store=[]
+    for subdir, dirs, files in os.walk('uploads'):
+        for file in files:
+            file_store.append(os.path.join(subdir, file))
+    return file_store
+
 def form_errors(form):
     error_messages = []
     """Collects form errors"""
