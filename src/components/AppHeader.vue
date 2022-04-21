@@ -1,8 +1,8 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">Lab 7</a>
+        <a class="navbar-brand" href="/"><fa icon="car" /> United Auto Sales</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -25,6 +25,12 @@
             <li class="nav-item">
               <RouterLink class="nav-link" to="/register">Register</RouterLink>
             </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/explore">Explore</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/addcar">Add Car</RouterLink>
+            </li>
           </ul>
         </div>
       </div>
@@ -37,5 +43,7 @@ import { RouterLink } from "vue-router";
 </script>
 
 <style>
-/* Add any component specific styles here */
+  nav{
+    background-color: #202938;
+  }
 </style>

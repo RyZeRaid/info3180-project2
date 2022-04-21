@@ -1,5 +1,5 @@
 <template>
-<h1 class="page-header" id="pgheader">Register New User</h1>
+<h2 class="page-header" id="pgheader">Register New User</h2>
 
 <div class="card text-left" style="width: 48rem; " id = "card">
 <div class="card-body">
@@ -8,14 +8,14 @@
   <div class="row mb-2">
     <div class="col-auto">
       <div class="form-group">
-        <label for="username">username</label>
-        <input name="username" v-model="username" placeholder="username">
+        <label for="username">Username</label>
+        <input name="username" v-model="username" placeholder="Username" class="form-control register-form">
         </div>
     </div>
     <div class="col-auto">
       <div class="form-group">
-        <label for="password">password</label>
-        <input name="password" v-model="password" placeholder="password" type="password">
+        <label for="password">Password</label>
+        <input name="password" v-model="password" placeholder="Password" type="password" class="form-control register-form">
         </div>
     </div>
   </div>
@@ -24,13 +24,13 @@
     <div class="col-auto">
       <div class="form-group">
         <label for="name">Full Name</label>
-        <input name="name" v-model="name" placeholder="full name">
+        <input name="name" v-model="name" placeholder="Full Name" class="form-control register-form">
         </div>
     </div>
     <div class="col-auto">
       <div class="form-group">
         <label for="email">Email</label>
-        <input name="email" v-model="email" placeholder="John.bond764@gmail.com">
+        <input name="email" v-model="email" placeholder="John.bond764@gmail.com" class="form-control register-form">
         </div>
     </div>
   </div>
@@ -39,7 +39,7 @@
         <div class="col-auto">
             <div class="form-group">
                 <label for="location">Location</label>
-                <input name="location" v-model="location" placeholder="">
+                <input name="location" v-model="location" placeholder="" class="form-control register-form">
             </div>
         </div>
     </div>
@@ -47,15 +47,17 @@
     <div class="form-group">
         <label for="description">Biography</label>
         <textarea name="description" v-model="description"
-            id="description" class="form-control mb-2 mr-sm-2" placeholder="add a description"></textarea>
+            id="description" class="mb-2 mr-sm-2 form-control" placeholder="Add Description"></textarea>
     </div>
    
     <div class="form-group">
-        <input type="file" id="photo" name="photo" @change="selectImage">
+      <label for="photo">Upload Photo</label>
+        <input class="form-control register-form" type="file" id="photo" name="photo" @change="selectImage">
     </div>
   
+  <br>
   <div class="col-12">
-    <button type="submit" name="submit" class="btn btn-primary" @click="register">Register</button>
+    <button id="btn1" type="submit" name="submit" class="btn btn-primary" @click="register">Register</button>
     <button type="reset" name="reset" class="btn btn-warning">Undo all</button>
   </div>
   
@@ -116,5 +118,16 @@ export default {
 </script>
 
 <style>
-/* Add any component specific styles here */
+  label {
+    font-weight: bold;
+    font-size: 0.8em;
+  }
+.register-form {
+  width: 350px;
+}
+
+.page-header{
+  font-size: 2em;
+}
+
 </style>

@@ -1,5 +1,5 @@
 <script>
-import RegisterForm from '@/components/RegisterForm.vue'
+import NewCarForm from '@/components/NewCarForm.vue'
 
 export default {
     data() {
@@ -12,24 +12,20 @@ export default {
             username: '',
             password: '',
             location: '',
-            message: "Hello World! This is Register page"
+            message: "Hello World! This is Explore page"
         };
     },
-    components: { RegisterForm }
+    components: { NewCarForm }
 }
 </script>
 
 <template>
     <div class="container">
-        <RegisterForm/>
+        <NewCarForm/>
       </div>
 </template>
 
 <style>
-body {
-  background-color: #f3f4f6;
-}
-
 .container {
   display: flex;
   flex-direction: column;

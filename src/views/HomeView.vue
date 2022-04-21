@@ -12,16 +12,54 @@ export default {
 </script>
 
 <template>
-    <div class="container">
-      <div class="text-center">
-        <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-        <h1>{{ message }}</h1>
-        
-        
+  <div class="con">
+    <div class="home">
+      <div id="text">
+        <h2>Buy and Sell <br> Cars Online</h2>
+        <p>United Auto Sales provies the fastest easiest firendly way to buy or sell cars online. Find a Great Price on the Vehicle on the Vehicle You Want.</p>
+        <button type="button" class="btn btn-primary" id="btn1">Register</button>
+        <button type="button" class="btn btn-success">Login</button>
+      </div>
+      <div id="car">
+        <img src="../img/Car.jpg" alt="">
       </div>
     </div>
+  </div>
 </template>
 
 <style>
-/* Add any component specific styles here */
+
+  h2 {
+    font-size: 4em;
+  }
+
+  p {
+    margin-right: 90px;
+    color: gray;
+  }
+
+  #btn1{
+    margin-right: 10px;
+  }
+
+  .home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #text {
+    padding-left: 6em;
+  }
+
+  body{
+    padding-top: 55px;
+    background-color: white;
+  }
+
+  img {
+    height: calc(100vh - 55px);
+  }
+
+
 </style>
