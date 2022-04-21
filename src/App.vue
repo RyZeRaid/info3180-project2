@@ -11,11 +11,9 @@ import AppFooter from "@/components/AppFooter.vue";
   <main>
     <RouterView />
   </main>
-  
-  <AppFooter />
 </template>
 
-<style>
+<style> 
 body {
   padding-top: 75px;
 }

@@ -78,3 +78,5 @@ $ \c autosales #allows you to enter the specific database called autosales
 $ \ dt   # shows the tables in the database
 $ select * from "insert table name  here";  #to see the data uploaded to the database remove the ("") when typing in the specific table.
 
+
+https://github.com/FortAwesome/vue-fontawesome

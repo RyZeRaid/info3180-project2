@@ -33,7 +33,17 @@ const router = createRouter({
     {
       path: '/logout',
       name: 'Logout',
-    }
+      
+    },{
+      path: '/explore',
+      name: 'Explore',
+      component: () => import('../views/ExploreView.vue')
+    },
+    {
+      path: '/addcar',
+      name: 'Add New Car',
+      component: () => import('../views/NewCarView.vue')
+    },
   ]
 })
 

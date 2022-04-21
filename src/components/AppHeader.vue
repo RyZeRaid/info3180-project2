@@ -1,8 +1,12 @@
 <template>
   <header>
+<<<<<<< HEAD
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" :key="$route.fullPath">
+=======
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+>>>>>>> 9cc33ceec946ffe91a08f0b96b5ce15f20c9d369
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">Lab 7</a>
+        <a class="navbar-brand" href="/"><fa icon="car" /> United Auto Sales</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -22,6 +26,13 @@
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" to="/about">About</RouterLink>
+            </li>
+          
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/explore">Explore</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/addcar">Add Car</RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" to="/register">Register</RouterLink>
@@ -60,5 +71,7 @@ export default {
 </script>
 
 <style>
-/* Add any component specific styles here */
+  nav{
+    background-color: #202938;
+  }
 </style>

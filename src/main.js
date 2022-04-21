@@ -1,7 +1,12 @@
 import { createApp } from 'vue'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import router from './router'
 import { createStore } from 'vuex';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(fas)
 
 const store = createStore({
     state(){
@@ -33,6 +38,8 @@ router.beforeEach((to, from, next) => {
     
   });
 const app = createApp(App)
+
+.component('fa', FontAwesomeIcon)
 
 app.use(router)
 app.use(store)
