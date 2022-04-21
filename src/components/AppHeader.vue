@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" :key="$route.fullPath">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">Lab 7</a>
         <button
@@ -11,13 +11,14 @@
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" :key="$route.fullPath"> 
+          <ul class="navbar-nav me-auto" id = "nav">
             <li class="nav-item">
-              <RouterLink to="/" class="nav-link active">Home</RouterLink>
+              <RouterLink to="/" class="nav-link active" >Home</RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" to="/about">About</RouterLink>
@@ -25,6 +26,18 @@
             <li class="nav-item">
               <RouterLink class="nav-link" to="/register">Register</RouterLink>
             </li>
+            <div v-if = "check === 'null' " >
+              <li class="nav-item">
+                
+                <RouterLink class="nav-link" to="/login">Login</RouterLink>
+              </li>
+            </div>
+            <div v-else>
+                <li class="nav-item">
+                  
+                <RouterLink class="nav-link" to="/logout">Logout</RouterLink>
+                </li>
+            </div>
           </ul>
         </div>
       </div>
@@ -34,6 +47,16 @@
 
 <script>
 import { RouterLink } from "vue-router";
+
+export default {
+    data() {
+        return {
+             check : localStorage.getItem('id')
+            
+        };
+    },
+    
+}
 </script>
 
 <style>

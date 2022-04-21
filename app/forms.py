@@ -24,3 +24,8 @@ class registerForm(FlaskForm):
     email = StringField('Email Address', validators=[InputRequired(),Email('Please enter a valid email adress')])
     location =StringField('Location',  validators=[DataRequired(),InputRequired(),Length(max=700)])
     name = StringField('Fullname', validators=[InputRequired()])
+
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[InputRequired()])
+    password = PasswordField('Password', validators=[InputRequired()])
+    

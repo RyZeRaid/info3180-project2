@@ -4,6 +4,8 @@
     <p>This is an about page.</p>
   </div>
 </template>
+<script>
 
+</script>
 <style>
 </style>

@@ -6,10 +6,10 @@ This file creates your application.
 """
 
 from app import app, db
-from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory
+from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory,session
 import os
-from .models import Cars,Users
-from .forms import addCarsForm, registerForm
+from .models import Cars, Users, Favourites
+from .forms import addCarsForm, registerForm, LoginForm
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash
 from datetime import date, datetime
@@ -22,13 +22,19 @@ from flask_wtf.csrf import generate_csrf
 
 @app.route('/')
 def index():
-    return jsonify(message="This is the beginning of our API")
+    return jsonify(message="This is the beginning of our API tedting")
+@app.route('/about')
+def about():
+    return jsonify(message="This is the beginning of our testing thsi ")
 
 @app.route('/api/register',methods = ["POST","GET"])
 def register():
+    print("this is the register form ")
     form = registerForm()
-    if request.method == 'POST'and form.validate_on_submit():
-        
+    user= None
+    re =user
+    print("this is the method used for the csrf token", request.method)
+    if form.validate_on_submit() and request.method == 'POST':
         description = form.description.data
         name = form.name.data
         location= form.location.data
@@ -37,27 +43,58 @@ def register():
         password = form.password.data
         photo = form.photo.data
         filename = secure_filename(photo.filename)
-        photo.save((os.path.join(app.config['UPLOAD_FOLDER'], filename)))
-
-        
-          
-        user = Users(name = name, biography = description , password = password,
-                        email = email,location = location, username = username, photo = filename) 
-        print("before database", user)
+        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        user = Users(
+                    biography=description,name=name, location=location,
+                    email=email, photo =filename, password=password,username=username 
+        ) 
+            
         db.session.add(user)
         db.session.commit()
-        
         flash('Successfully added a new member to the database','success')
-        return jsonify(message="This is the register of our API", filename = filename,
-                        biography = description, name=name, location= location, email= email, username=username, password=password)
+        re= user
+        return jsonify({
+                            'message':'This is the register of our API ',
+                            'user' : user,
+        })
     else:
-        flash('ERROR didnt add image','danger')
-        return jsonify(errors = form_errors(form))    
+        return jsonify(message= "error ", user = re)
+       
         
 
 @app.route('/api/auth/login',methods = ["POST","GET"])
 def login():
-    return jsonify(message="This is the login of our API")
+
+    print("this is the csrf",request.method )
+    print("got in first line")
+    
+
+    print("got in function",request.method)
+    res = {'status': 'success wasnt true'}
+    form = LoginForm()
+    if form.validate_on_submit() and request.method == 'POST':
+        
+        username = form.username.data
+        password = form.password.data
+        print(username, password, "this is the info entered")
+        user = Users.query.filter_by(username=username).first()
+        print("this is the user")
+
+        if user is not None and check_password_hash(user.password, password):
+           
+            next_page = request.args.get('next')
+            
+            res = { 'token': user.password ,
+                    'id': user.id,
+                    'auth': True }
+            
+        else:
+            print("no user with that password ")
+            flash('Username or Password is incorrect.', 'danger')
+            res = { 'token': '' ,
+                    'id': '',
+                    'auth': False }
+    return jsonify(res)
 
 @app.route('/api/auth/logout',methods= ["POST","GET"])
 def logout():

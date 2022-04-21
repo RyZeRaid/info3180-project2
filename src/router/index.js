@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+
   routes: [
     {
       path: '/',
@@ -20,9 +21,22 @@ const router = createRouter({
     {
       path: '/register',
       name: 'Register',
-      component: () => import('../views/RegisterView.vue')
+      component: () => import('../views/RegisterView.vue'),
+      
     },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('../views/LoginView.vue')
+      
+    },
+    {
+      path: '/logout',
+      name: 'Logout',
+    }
   ]
 })
+
+
 
 export default router

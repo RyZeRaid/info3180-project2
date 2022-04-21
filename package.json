@@ -7,8 +7,10 @@
     "preview": "vite preview --port 5050"
   },
   "dependencies": {
-    "vue": "^3.2.31",
-    "vue-router": "^4.0.12"
+    "axios": "^0.21.4",
+    "vue": "^3.2.33",
+    "vue-router": "^4.0.12",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.2",

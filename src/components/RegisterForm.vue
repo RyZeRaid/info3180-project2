@@ -4,7 +4,7 @@
 <div class="card text-left" style="width: 48rem; " id = "card">
 <div class="card-body">
 <form  id = "RegisterForm" >
-  
+ 
   <div class="row mb-2">
     <div class="col-auto">
       <div class="form-group">
@@ -55,7 +55,7 @@
     </div>
   
   <div class="col-12">
-    <button type="submit" name="submit" class="btn btn-primary" @click="register">Register</button>
+    <button type="submit" name="submit" class="btn btn-primary" @click.prevent="register">Register</button>
     <button type="reset" name="reset" class="btn btn-warning">Undo all</button>
   </div>
   
@@ -76,16 +76,19 @@ export default {
           username: '',
           password: '',
           location: ''
+            
         }
     },
     created() {
         this.getCsrfToken();
+        
     },
   methods: {
     register(){
-
+      
       let registerForm = document.getElementById('RegisterForm');
       let form_data = new FormData(registerForm);
+      
         fetch("/api/register", {
             method: 'POST', 
             body: form_data,
@@ -96,13 +99,17 @@ export default {
           })
           .then(function (data) {
           // display a success message
+            console.log("worked success")
             console.log(data);
           })
           .catch(function (error) {
               console.log(error);
           });
+          this.$router.push('/login');
     },
     getCsrfToken(){
+      const user = this.$store.state.auth
+      console.log(user)
       let self = this;
       fetch('/api/csrf-token')
         .then((response) => response.json())
