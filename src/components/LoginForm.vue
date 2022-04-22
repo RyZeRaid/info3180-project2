@@ -24,15 +24,15 @@
 </template>
 
 <script>
+import store from '@/main.js'; 
 
 export default {
-     
     data() {
         return {
           csrf_token: '',
           username: '',
           password: '',
-          check: '',
+         
         };
     },
     created() {
@@ -41,7 +41,7 @@ export default {
     },
   methods: {
     login(){
-
+      console.log("came in function")
       let loginForm = document.getElementById('LoginForm');
       let form_data = new FormData(loginForm);
         fetch("/api/auth/login", {
@@ -57,13 +57,21 @@ export default {
           .then(function (data) {
           // display a success message
             if(data.token != ''){
+                
                 localStorage.setItem('token', data.token )
                 localStorage.setItem('id', data.id )
+                store.commit('checktrue', true);
             }else{
-              localStorage.setItem('token', null )
+                
+                localStorage.setItem('token', null )
                 localStorage.setItem('id', null )
+                store.commit('checktrue', false);
             }
+            
             localStorage.setItem('auth', data.auth )
+            
+            
+            console.log("show me the check :", store.state.check)
             console.log("this is the token in local storage",localStorage.getItem('id'))
             console.log(data.token, data.id,localStorage.getItem('auth') );
             
@@ -72,7 +80,9 @@ export default {
           .catch(function (error) {
               console.log(error);
           });
+          
           this.$router.push('/');
+          
     },
     getCsrfToken(){
       console.log("thisis the state when logged",this.$store.state.auth)
