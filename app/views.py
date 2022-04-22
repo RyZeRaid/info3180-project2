@@ -6,7 +6,7 @@ This file creates your application.
 """
 
 from app import app, db
-from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory,session
+from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory,session,request
 import os
 from .models import Cars, Users, Favourites
 from .forms import addCarsForm, registerForm, LoginForm
@@ -63,26 +63,28 @@ def register():
 
 @app.route('/api/addcar',methods = ["POST","GET"])
 def addcar():
-    
+    print("this is the id of the loggedin person",request.json['logged'])
     form = addCarsForm()
     car = None
     re = car
     if request.method == 'POST':
         print("hello")
-        description = form.description.data
-        photo = form.photo.data
-        make = form.make.data
-        model = form.model.data
-        colour = form.colour.data
-        transmission = form.transmission.data
-        car_type = form.type.data
-        year = form.year.data
-        price = form.price.data
+        description = request.json['description']
+        photo = request.json['photo']
+        make = request.json['make']
+        model = request.json['model']
+        colour = request.json['colour']
+        transmission = request.json['transmission']
+        car_type = request.json['type']
+        year = request.json['year']
+        price = request.json['price']
+        id = request.json['logged']
         filename = secure_filename(photo.filename)
         photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        
         car = Cars(
                     description=description,make=make, model= model,
-                    color=colour, photo =filename, transmission = transmission,car_type=car_type, price = price, user_id = 1, year = year
+                    color=colour, photo =filename, transmission = transmission,car_type=car_type, price = price, user_id = id, year = year
         ) 
             
         db.session.add(car)

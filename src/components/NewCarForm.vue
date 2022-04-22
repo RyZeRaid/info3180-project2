@@ -104,7 +104,7 @@ export default {
           price: '',
           type: '',
           transmission: '',
-            
+          logged: this.$store.state.id,
         }
     },
     created() {
@@ -121,16 +121,19 @@ export default {
       
         fetch("/api/addcar", {
             method: 'POST', 
-            body: form_data,
-            headers: {'X-CSRFToken': this.csrf_token}
+            body: JSON.stringify({logged:this.logged, description: this.description, photo:this.photo,
+                                  make:this.make, modle:this.modle, colour:this.colour,
+                                  year:this.year, price:this.price, type:this.type,transmission:this.transmission}),
+            headers: {'X-CSRFToken': this.csrf_token},
           })
           .then(function (response) {
                 return response.json();
           })
-          .then(function (data) {
+          .then(() =>  {
+
           // display a success message
             console.log("worked success")
-            console.log(data);
+            this.$router.push({name: 'home'})
           })
           .catch(function (error) {
               console.log(error);
