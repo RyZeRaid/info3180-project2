@@ -9,6 +9,8 @@ export default{
     components:{
       Navbar,
       AppHeader
+    },created(){
+      this.if_reload();
     },
     computed: {
        getConditionallyRenderedNavbar() {
@@ -19,6 +21,13 @@ export default{
          }
           //or second nav or no nav
        }
+    },
+    methods: {
+      if_reload(){
+        if(localStorage.getItem('id') !== 'null'){
+          this.$store.commit('checktrue', true);
+        }
+      }
     },
 }
 

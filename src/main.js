@@ -31,9 +31,12 @@ const store = createStore({
 router.beforeEach((to, from, next) => {
     console.log("came here actually ")
     console.log('fuh89f7gf', store.state.check)
-    if(to.path === '/register' && store.state.check === ''){
+    if(to.path === '/addcar' && store.state.check === ''){
       next('/login')
-    }else{
+    }else if(to.path === '/explore' && store.state.check === ''){
+      next('/login')
+    }
+    else{
       next()
     }
     if(to.path === '/logout' && store.state.check === true){
@@ -48,7 +51,7 @@ router.beforeEach((to, from, next) => {
 
 
     }
-
+    
   });
 const app = createApp(App)
 
