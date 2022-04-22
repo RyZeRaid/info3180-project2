@@ -1,26 +1,34 @@
 <template>
-        <div class="login-form center-block">
-    <h2 class="h3 mb-3 fw-normal">Please Log in</h2>
+
+<div class="login">
+
+<h2 class="page-header" id="pgheader">Login to your account</h2>
+
+<div class="card text-left" style="width: 40rem; " id = "card">
+<div class="card-body">
+  
     
     <form id = "LoginForm" >
  
         <div class="col-auto">
         <div class="form-group">
-            <label for="username">username</label>
-            <input name="username" v-model="username" placeholder="username">
+            <label for="username">Username</label>
+            <input class="form-control" name="username" v-model="username" placeholder="Username">
             </div>
         </div>
         <div class="col-auto">
         <div class="form-group">
-            <label for="password">password</label>
-            <input name="password" v-model="password" placeholder="password" type="password">
+            <label for="password">Password</label>
+            <input class="form-control" name="password" v-model="password" placeholder="Password" type="password">
             </div>
         </div>
-        
+        <br>
       <button type="submit" name="submit" class="btn btn-primary btn-block" @click.prevent= "login">Log in</button>
     
     </form>
   </div>
+</div>
+</div>
 </template>
 
 <script>
@@ -100,5 +108,21 @@ export default {
 </script>
 
 <style>
-/* Add any component specific styles here */
+
+.page-header{
+  font-size: 2em;
+}
+
+label {
+    font-weight: bold;
+    font-size: 0.8em;
+  }
+
+.login{
+  margin-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 </style>

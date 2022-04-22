@@ -1,4 +1,4 @@
-from . import db
+from . import db, ma
 from datetime import datetime
 from werkzeug.security import generate_password_hash
 
@@ -83,3 +83,8 @@ class Users(db.Model):
 
     def __repr__(self):
         return '<User %r>' %  self.username
+
+
+class cars_schema(ma.Schema):
+    class Meta:
+        fields = ('description', 'make', 'model', 'color', 'year', 'transmission', 'car_type', 'price', 'photo', 'user_id')

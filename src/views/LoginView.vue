@@ -15,8 +15,6 @@ export default {
 <template>
     <div class="container">
       <div class="text-center">
-        <h1>{{ message }}</h1>
-        <p>this is the token : {{ token }}</p>
         <LoginForm/>
       </div>
     </div>

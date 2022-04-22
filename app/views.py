@@ -8,7 +8,7 @@ This file creates your application.
 from app import app, db
 from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory,session
 import os
-from .models import Cars, Users, Favourites
+from .models import Cars, Users, Favourites, cars_schema
 from .forms import addCarsForm, registerForm, LoginForm
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash
@@ -16,9 +16,23 @@ from datetime import date, datetime
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_wtf.csrf import generate_csrf
 
+
 ###
 # Routing for your application.
 ###
+
+@app.route('/api/cars', methods=['GET'])
+def showcars():
+
+    carsschema = cars_schema(many = True)
+
+    cars =  Cars.query.all()
+
+    carss = carsschema.dump(cars)
+
+    
+    print(type(cars[1].make))
+    return jsonify(carss)
 
 @app.route('/')
 def index():
@@ -135,10 +149,6 @@ def login():
 def logout():
     return jsonify(message="This is the logout of our API")
 
-@app.route('/api/cars')
-def showcars():
-    return jsonify(message="This is the show cars of our API")
-
 @app.route('/api/cars', methods= ["POST","GET"])
 def addcars():
     return jsonify(message="This is the addcars of our API")
@@ -173,14 +183,9 @@ def get_csrf():
 
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
-def get_uploaded_images():
-    rootdir = os.getcwd()
-    print("this is root" ,rootdir)
-    file_store=[]
-    for subdir, dirs, files in os.walk('uploads'):
-        for file in files:
-            file_store.append(os.path.join(subdir, file))
-    return file_store
+def get_image():
+    return os.path.join(os.getcwd(),app.config['UPLOAD_FOLDER'])
+
 
 def form_errors(form):
     error_messages = []

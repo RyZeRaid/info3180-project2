@@ -26,10 +26,6 @@ export default {
 </template>
 
 <style>
-body {
-  background-color: #f3f4f6;
-}
-
 .container {
   display: flex;
   flex-direction: column;
