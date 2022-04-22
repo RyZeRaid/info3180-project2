@@ -45,6 +45,7 @@ export default{
 
 <style> 
 body {
+  background-color: #f3f4f6;
   padding-top: 75px;
 }
 </style>

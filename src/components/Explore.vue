@@ -25,12 +25,45 @@
                 </div>
             </div>
         </form>
-    </div>
 
+    </div>
+    <div v-for="car in cars" :key="car.id">
+            <img src="../uploads/Car.jpg" alt="">
+            <p>{{ car.make }}</p>
+        </div>
     
 </template>
 
 <script>
+
+    
+    export default {
+    data() {
+        return {
+          csrf_token: '',
+          cars: [],
+        };
+    },
+    created() {
+        this.getCars();
+       
+    },
+    methods: {
+        getCars(){
+      let self = this;
+      fetch('/api/cars')
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          this.cars.push(...data)
+          //self.csrf_token = data.csrf_token;
+        })
+        .catch(function (error) {
+              console.log(error);
+          });
+    },
+  }  
+    }
 
 
 </script>
