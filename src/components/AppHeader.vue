@@ -11,7 +11,7 @@
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
-          
+
         >
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,7 +22,7 @@
             </li>
     
               <li class="nav-item">
-                
+
                 <RouterLink class="nav-link" to="/login">Login</RouterLink>
               </li>
           </ul>
@@ -39,10 +39,10 @@ export default {
     data() {
         return {
              check : localStorage.getItem('id')
-            
+
         };
     },
-    
+
 }
 </script>
 

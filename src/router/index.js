@@ -32,7 +32,7 @@ const router = createRouter({
     },
     {
       path: '/logout',
-      name: 'Logout',
+      name: 'Logout'
       
     },{
       path: '/explore',

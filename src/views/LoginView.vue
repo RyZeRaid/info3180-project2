@@ -4,6 +4,7 @@ import LoginForm from '@/components/LoginForm.vue'
 export default {
     data() {
         return {
+           
             token: '',
             message: "Hello World! This is login page"
         };

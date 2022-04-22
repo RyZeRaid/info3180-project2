@@ -6,7 +6,9 @@ export default {
             message: "Hello World! This is Lab 7"
         };
     },
-    
+    created(){
+       
+    }
 }
 </script>
 
