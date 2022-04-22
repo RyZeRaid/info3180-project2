@@ -59,6 +59,41 @@ def register():
         })
     else:
         return jsonify(message= "error ", user = re)
+
+
+@app.route('/api/addcar',methods = ["POST","GET"])
+def addcar():
+    
+    form = addCarsForm()
+    car = None
+    re = car
+    if request.method == 'POST':
+        print("hello")
+        description = form.description.data
+        photo = form.photo.data
+        make = form.make.data
+        model = form.model.data
+        colour = form.colour.data
+        transmission = form.transmission.data
+        car_type = form.type.data
+        year = form.year.data
+        price = form.price.data
+        filename = secure_filename(photo.filename)
+        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        car = Cars(
+                    description=description,make=make, model= model,
+                    color=colour, photo =filename, transmission = transmission,car_type=car_type, price = price, user_id = 1, year = year
+        ) 
+            
+        db.session.add(car)
+        db.session.commit()
+        flash('Successfully added a car to the database','success')
+        re = car
+        return jsonify({
+                            'message':'This is the register of our API ',
+        })
+    else:
+        return jsonify(message= "error ")
        
         
 

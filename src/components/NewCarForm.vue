@@ -29,7 +29,7 @@
     </div>
     <div class="col-auto">
       <div class="form-group">
-        <label for="year">year</label>
+        <label for="year">Year</label>
         <input name="year" v-model="year" placeholder="2022" class="form-control register-form">
         </div>
     </div>
@@ -82,7 +82,7 @@
   
   <br>
   <div class="col-12">
-    <button id="btn1" type="submit" name="submit" class="btn btn-primary" @click="register">Save</button>
+    <button id="btn1" type="submit" name="submit" class="btn btn-primary" @click.prevent="addcar">Save</button>
     <button type="reset" name="reset" class="btn btn-warning">Undo all</button>
   </div>
 </form>
@@ -91,6 +91,65 @@
 </template>
 
 <script>
+export default {
+    data() {
+        return {
+          csrf_token: '',
+          description: '',
+          photo: '',
+          make: '',
+          model: '',
+          colour: '',
+          year: '',
+          price: '',
+          type: '',
+          transmission: '',
+            
+        }
+    },
+    created() {
+        this.getCsrfToken();
+        
+    },
+  methods: {
+    addcar(){
+      
+      let newCarForm = document.getElementById('AddNewCar');
+      let form_data = new FormData(newCarForm);
+
+      console.log(form_data)
+      
+        fetch("/api/addcar", {
+            method: 'POST', 
+            body: form_data,
+            headers: {'X-CSRFToken': this.csrf_token}
+          })
+          .then(function (response) {
+                return response.json();
+          })
+          .then(function (data) {
+          // display a success message
+            console.log("worked success")
+            console.log(data);
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
+    },
+    getCsrfToken(){
+      const user = this.$store.state.auth
+      console.log(user)
+      let self = this;
+      fetch('/api/csrf-token')
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          self.csrf_token = data.csrf_token;
+        })
+    }
+  }  
+}
+
 
 </script>
 

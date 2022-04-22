@@ -15,16 +15,18 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent" :key="$route.fullPath">
-          <ul class="navbar-nav ml-auto" id = "nav">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" :key="$route.fullPath"> 
+          <ul class="navbar-nav me-auto" id = "nav">       
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/register">Register</RouterLink>
+              <RouterLink class="nav-link" to="/explore">Explore</RouterLink>
             </li>
-    
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/addcar">Add Car</RouterLink>
+            </li>
               <li class="nav-item">
                 
-                <RouterLink class="nav-link" to="/login">Login</RouterLink>
-              </li>
+                <RouterLink class="nav-link" to="/logout">Logout</RouterLink>
+              </li>               
           </ul>
         </div>
       </div>
@@ -47,11 +49,6 @@ export default {
 </script>
 
 <style>
-
-  .login-register{
-    float: right;
-  }
-
   nav{
     background-color: #202938;
   }
