@@ -50,7 +50,7 @@ router.beforeEach((to, from, next) => {
       localStorage.setItem('id', null );
       localStorage.setItem('auth', false );
       store.commit('checktrue', false);
-      store.commit('uid', '');
+      store.commit('checkid', '');
       console.log(store.state.check)
       window.location.reload();
       next('/');
