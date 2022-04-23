@@ -37,12 +37,18 @@ const router = createRouter({
     },{
       path: '/explore',
       name: 'Explore',
-      component: () => import('../views/ExploreView.vue')
+      component: () => import('../views/ExploreView.vue'),
+      props: true
     },
     {
       path: '/addcar',
       name: 'Add New Car',
       component: () => import('../views/NewCarView.vue')
+    },
+    {
+      path: '/cars/:id',
+      name: 'View Car',
+      component: () => import('../views/ViewCarView.vue')
     },
   ]
 })

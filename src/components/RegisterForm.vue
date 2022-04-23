@@ -137,4 +137,8 @@ export default {
   font-size: 2em;
 }
 
+body {
+  background-color: #f3f4f6;
+}
+
 </style>

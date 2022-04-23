@@ -6,9 +6,6 @@ export default {
             message: "Hello World! This is Lab 7"
         };
     },
-    created(){
-       
-    }
 }
 </script>
 
@@ -22,7 +19,7 @@ export default {
         <button type="button" class="btn btn-success">Login</button>
       </div>
       <div id="car">
-        <img src="../img/Car.jpg" alt="">
+        <img class="homeimg" src="../img/Car.jpg" alt="">
       </div>
     </div>
   </div>
@@ -58,7 +55,7 @@ export default {
     background-color: white;
   }
 
-  img {
+  .homeimg {
     height: calc(100vh - 55px);
   }
 
