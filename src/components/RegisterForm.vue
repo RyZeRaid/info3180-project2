@@ -97,6 +97,7 @@ export default {
             headers: {'X-CSRFToken': this.csrf_token}
           })
           .then(function (response) {
+                console.log(response)
                 return response.json();
           })
           .then(function (data) {
@@ -119,7 +120,8 @@ export default {
           console.log(data);
           self.csrf_token = data.csrf_token;
         })
-    }
+    },
+    
   }  
 }
 </script>

@@ -9,7 +9,7 @@ from app import app, db
 from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory,session
 import os
 from .models import Cars, Users, Favourites, cars_schema
-from .forms import addCarsForm, registerForm, LoginForm
+from .forms import addCarsForm, registerForm, LoginForm, SearchForm
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash
 from datetime import date, datetime
@@ -158,9 +158,6 @@ def login():
 def logout():
     return jsonify(message="This is the logout of our API")
 
-@app.route('/api/cars')
-def showcars():
-    return jsonify(message="This is the show cars of our API")
 
 @app.route('/api/cars', methods= ["POST","GET"])
 def addcars():
@@ -170,9 +167,30 @@ def addcars():
 def addfavcar(id):
     return jsonify(message="This is the add to favourite of our API")   
 
-@app.route('/api/cars',methods= ["POST","GET"])
+@app.route('/api/search',methods= ["POST","GET"])
 def search():
-    return jsonify(message="This is the search cars of our API")
+    form = SearchForm()
+    carsschema = cars_schema(many = True)
+
+    print("this isi the data", form.model.data)
+    model = form.model.data
+    make = form.make.data
+
+    if make == '' and model == '':
+        cars =  Cars.query.all()
+        carss = carsschema.dump(cars)
+        return jsonify(carss)
+    elif make != '' and model == '':
+        cars =  Cars.query.filter(Cars.make.like('%'+ make +'%')).all()
+        carss = carsschema.dump(cars)
+    elif make =='' and model != '':
+        cars =  Cars.query.filter(Cars.model.like('%'+ model +'%')).all()
+        carss = carsschema.dump(cars)
+    elif make != '' and model != '':
+        cars =  Cars.query.all()
+        carss = carsschema.dump(cars)
+        return jsonify(carss)
+    return jsonify(carss)
 
 @app.route('/api/users/<int:id>',methods= ["POST","GET"])
 def viewuser(id):

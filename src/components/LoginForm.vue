@@ -67,7 +67,7 @@ export default {
             if(data.token != ''){
                 
                 localStorage.setItem('token', data.token )
-                localStorage.setItem('id', data.id )
+                localStorage.setItem('id', data.id)
                 store.commit('checktrue', true);
             }else{
                 
