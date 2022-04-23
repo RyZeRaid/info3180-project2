@@ -198,6 +198,7 @@ def viewuser(id):
 
 @app.route('/api/users/<int:id>/favourites',methods= ["POST","GET"])
 def getfavcar(id):
+    
     return jsonify(message="This is the get users favourite cars of our API")
 
 @app.route('/api/csrf-token', methods=['GET'])

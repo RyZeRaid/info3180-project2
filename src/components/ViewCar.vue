@@ -32,9 +32,12 @@
                 
 
                 <button class="btn btn-primary">Email Realtor</button>
+                <button :class='{button: button, active:active}'
+                type="submit" id='heart'  @click.prevent ="fav"></button>
             </div>
         </div>
     </div>
+    
 </template>
 
 <script>
@@ -42,10 +45,14 @@
         data(){
             return{
                 car: '',
+                selected: '',
+                button: true,
+                active: false
             }
         },
         created() {
             this.get_data();
+            
         },
         methods: {
             get_data(){
@@ -60,7 +67,26 @@
                 .catch(function (error) {
                     console.log(error);
                 });
-                    }
+            },
+            fav(){
+                if(this.active != true) {
+                    this.active = true
+                }else{
+                    this.active = false
+                }
+                
+                fetch("/api/cars/" + this.$route.params.id +"/favourite", {
+                    method: 'GET'
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("show me the message",data);
+                    //this.car = data
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
             
         }
         
@@ -78,4 +104,54 @@
     body {
   background-color: #f3f4f6;
 }
+
+
+.button{
+	width: 50px;
+	height: 50px;
+  top:85%;
+  border: none;
+  position: absolute;
+	left: 93%;
+	margin-top: -45px;
+	margin-left: -50px;
+	border-radius: 5px;
+	background: none;
+	cursor: pointer;
+	transition: background 0.8s ease;
+}
+
+.active#heart:before,.active#heart:after{
+	background: red !important;
+}
+#heart {
+    width: 100px;
+    height: 90px;
+    transition: background 0.5s ease;
+}
+#heart:before,
+#heart:after {
+	transition: background 0.5s ease;
+    position: absolute;
+    content: "";
+    left: 50px;
+    top: 0;
+    width: 50px;
+    height: 80px;
+    background: dimgrey;
+    border-radius: 50px 50px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+#heart:after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin :100% 100%;
+}
+
+
+
+
+
+
 </style>
