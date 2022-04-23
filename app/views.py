@@ -25,20 +25,19 @@ def viewcar(id,user_id):
     fav = False
     cars =  Cars.query.get_or_404(id)
     check = Favourites.query.filter_by(car_id = id).all()
-    check_id = Favourites.query.filter_by(user_id = user_id).first()
+    check_id = Favourites.query.filter_by(user_id = user_id).all()
     
     if check_id == None and check == None:
         fav = False
     elif check_id == None :
         fav = False
     else:
-        for x in check:
-            if x.car_id == check_id.car_id and x.user_id == check_id.user_id:
-                print("was true")
-                fav = True
-            else:
-                print("faild the if")
-                fav = False
+        for i in check_id:
+            for x in check:
+                if x.car_id == i.car_id and x.user_id == i.user_id:
+                    print("was true")
+                    fav = True
+            
     
         
     print(cars)
@@ -183,13 +182,14 @@ def addcars():
 def addfavcar(id):
     carsschema = cars_schema()
     user_id = request.json['user_id']
-
+    fav = False
     check = Favourites.query.filter_by(car_id = id).all()
-    check_id = Favourites.query.filter_by(user_id = user_id).first()
+    check_id = Favourites.query.filter_by(user_id = user_id).all()
     if check_id != None:
-        for x in check:
-            if x.car_id == check_id.car_id and x.user_id == check_id.user_id:
-                return jsonify(fav = True)
+        for i in check_id:
+            for x in check:
+                if x.car_id == i.car_id and x.user_id == i.user_id:
+                    return jsonify(fav = True)
     else:
         print("was here ")
                 
