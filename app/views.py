@@ -21,6 +21,20 @@ from flask_wtf.csrf import generate_csrf
 # Routing for your application.
 ###
 
+@app.route('/api/cars/<int:id>', methods= ["POST","GET"])
+def viewcar(id):
+    carsschema = cars_schema(many = True)
+
+    cars =  Cars.query.get_or_404(id)
+
+    print(cars)
+
+    #carss = carsschema.dump(cars)
+
+    'id','description', 'make', 'model', 'color', 'year', 'transmission', 'car_type', 'price', 'photo'
+
+    return jsonify(make = cars.make, id = cars.id, description = cars.description, model = cars.model, color = cars.color, year = cars.year, transmission = cars.transmission, car_type = cars.car_type, price = cars.price, photo = cars.photo)
+
 @app.route('/api/cars', methods=['GET'])
 def showcars():
 
@@ -29,9 +43,6 @@ def showcars():
     cars =  Cars.query.all()
 
     carss = carsschema.dump(cars)
-
-    
-    print(type(cars[1].make))
     return jsonify(carss)
 
 @app.route('/')
@@ -153,10 +164,6 @@ def logout():
 def addcars():
     return jsonify(message="This is the addcars of our API")
 
-@app.route('/api/cars/<int:id>',methods= ["POST","GET"])
-def viewcar(id):
-    return jsonify(message="This is the view a car of our API")
-
 @app.route('/api/cars/<int:id>/favourite',methods= ["POST","GET"])
 def addfavcar(id):
     return jsonify(message="This is the add to favourite of our API")   
@@ -183,8 +190,9 @@ def get_csrf():
 
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
+@app.route('/api/image', methods=['GET'])
 def get_image():
-    return os.path.join(os.getcwd(),app.config['UPLOAD_FOLDER'])
+    return jsonify(send_from_directory(os.path.join(os.getcwd(),app.config['UPLOAD_FOLDER']), path = "Car.jpg"))
 
 
 def form_errors(form):

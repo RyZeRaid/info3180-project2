@@ -22,5 +22,7 @@ export default {
 </template>
 
 <style>
-/* Add any component specific styles here */
+body {
+  background-color: #f3f4f6;
+}
 </style>
