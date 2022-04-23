@@ -6,9 +6,9 @@ This file creates your application.
 """
 
 from app import app, db
-from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory,session,request
+from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory,session
 import os
-from .models import Cars, Users, Favourites, cars_schema
+from .models import Cars, Users, Favourites
 from .forms import addCarsForm, registerForm, LoginForm
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash
@@ -16,23 +16,10 @@ from datetime import date, datetime
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_wtf.csrf import generate_csrf
 
-
-###
 # Routing for your application.
 ###
 
-@app.route('/api/cars', methods=['GET'])
-def showcars():
-
-    carsschema = cars_schema(many = True)
-
-    cars =  Cars.query.all()
-
-    carss = carsschema.dump(cars)
-
-    
-    print(type(cars[1].make))
-    return jsonify(carss)
+logged =  0
 
 @app.route('/')
 def index():
@@ -77,25 +64,26 @@ def register():
 
 @app.route('/api/addcar',methods = ["POST","GET"])
 def addcar():
-    print("this is the id of the loggedin person",request.json['logged'])
+    
     form = addCarsForm()
     car = None
     re = car
+   
     if request.method == 'POST':
-        print("hello")
-        description = request.json['description']
-        photo = request.json['photo']
-        make = request.json['make']
-        model = request.json['model']
-        colour = request.json['colour']
-        transmission = request.json['transmission']
-        car_type = request.json['type']
-        year = request.json['year']
-        price = request.json['price']
-        id = request.json['logged']
+        
+        description = form.description.data
+        photo = form.photo.data
+        make = form.make.data
+        model = form.model.data
+        colour = form.colour.data
+        transmission = form.transmission.data
+        car_type = form.type.data
+        year = form.year.data
+        price = form.price.data
         filename = secure_filename(photo.filename)
         photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        
+        id = form.user_id.data
+
         car = Cars(
                     description=description,make=make, model= model,
                     color=colour, photo =filename, transmission = transmission,car_type=car_type, price = price, user_id = id, year = year
@@ -116,9 +104,6 @@ def addcar():
 @app.route('/api/auth/login',methods = ["POST","GET"])
 def login():
 
-    print("this is the csrf",request.method )
-    print("got in first line")
-    
 
     print("got in function",request.method)
     res = {'status': 'success wasnt true'}
@@ -134,7 +119,7 @@ def login():
         if user is not None and check_password_hash(user.password, password):
            
             next_page = request.args.get('next')
-            
+        
             res = { 'token': user.password ,
                     'id': user.id,
                     'auth': True }
@@ -150,6 +135,10 @@ def login():
 @app.route('/api/auth/logout',methods= ["POST","GET"])
 def logout():
     return jsonify(message="This is the logout of our API")
+
+@app.route('/api/cars')
+def showcars():
+    return jsonify(message="This is the show cars of our API")
 
 @app.route('/api/cars', methods= ["POST","GET"])
 def addcars():
@@ -185,9 +174,14 @@ def get_csrf():
 
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
-def get_image():
-    return os.path.join(os.getcwd(),app.config['UPLOAD_FOLDER'])
-
+def get_uploaded_images():
+    rootdir = os.getcwd()
+    print("this is root" ,rootdir)
+    file_store=[]
+    for subdir, dirs, files in os.walk('uploads'):
+        for file in files:
+            file_store.append(os.path.join(subdir, file))
+    return file_store
 
 def form_errors(form):
     error_messages = []

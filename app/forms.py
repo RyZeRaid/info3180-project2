@@ -14,7 +14,7 @@ class addCarsForm(FlaskForm):
     type = StringField('Type', validators=[InputRequired()])
     price = FloatField('Price', validators=[InputRequired()])
     photo = FileField('Photo ', validators=[FileRequired(),FileAllowed(['jpg', 'png'])])
-    user_id = IntegerField('user ID',validators=[InputRequired()])
+    user_id = StringField('user ID',validators=[InputRequired()])
 
 class registerForm(FlaskForm):
     description = TextAreaField('description',validators=[DataRequired(),InputRequired(),Length(max=800)] )

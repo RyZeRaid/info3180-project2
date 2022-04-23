@@ -79,10 +79,11 @@
       <label for="photo">Upload Photo</label>
         <input class="form-control register-form" type="file" id="photo" name="photo" @change="selectImage">
     </div>
+    <input type="hidden" name="user_id" id="user_id" :value = "this.$store.state.id" >
   
   <br>
   <div class="col-12">
-    <button id="btn1" type="submit" name="submit" class="btn btn-primary" @click.prevent="addcar">Save</button>
+    <button id="btn1" typve="submit" name="submit" class="btn btn-primary" @click.prevent="addcar">Save</button>
     <button type="reset" name="reset" class="btn btn-warning">Undo all</button>
   </div>
 </form>
@@ -96,7 +97,7 @@ export default {
         return {
           csrf_token: '',
           description: '',
-          photo: '',
+          photo:'',
           make: '',
           model: '',
           colour: '',
@@ -104,7 +105,7 @@ export default {
           price: '',
           type: '',
           transmission: '',
-          logged: this.$store.state.id,
+          user_id: '',
         }
     },
     created() {
@@ -116,14 +117,12 @@ export default {
       
       let newCarForm = document.getElementById('AddNewCar');
       let form_data = new FormData(newCarForm);
-
+      
       console.log(form_data)
       
         fetch("/api/addcar", {
             method: 'POST', 
-            body: JSON.stringify({logged:this.logged, description: this.description, photo:this.photo,
-                                  make:this.make, modle:this.modle, colour:this.colour,
-                                  year:this.year, price:this.price, type:this.type,transmission:this.transmission}),
+            body: form_data,
             headers: {'X-CSRFToken': this.csrf_token},
           })
           .then(function (response) {
@@ -140,6 +139,7 @@ export default {
           });
     },
     getCsrfToken(){
+      this.sendid()
       const user = this.$store.state.auth
       console.log(user)
       let self = this;
@@ -149,6 +149,10 @@ export default {
           console.log(data);
           self.csrf_token = data.csrf_token;
         })
+    },
+    sendid(){
+      this.user_id = this.$store.state.id
+      console.log("this is the id ", this.user_id )
     }
   }  
 }
