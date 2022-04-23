@@ -180,11 +180,28 @@ def addcars():
 
 @app.route('/api/cars/<int:id>/favourite',methods= ["POST","GET"])
 def addfavcar(id):
-    carsschema = cars_schema()
+    unfav= request.json['unfav']
     user_id = request.json['user_id']
-    fav = False
     check = Favourites.query.filter_by(car_id = id).all()
     check_id = Favourites.query.filter_by(user_id = user_id).all()
+
+    fav = False
+
+    if unfav == False:
+        if check_id != None:
+            for i in check_id:
+                for x in check:
+                    if x.car_id == i.car_id and x.user_id == i.user_id:
+                        findunfav = Favourites.query.get_or_404(int(x.id))
+                        db.session.delete(findunfav)
+                        db.session.commit()
+                        return jsonify(fav = False)
+
+
+    carsschema = cars_schema()
+    
+    
+    
     if check_id != None:
         for i in check_id:
             for x in check:

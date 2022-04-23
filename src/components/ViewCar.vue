@@ -50,6 +50,7 @@
                 button: true,
                 active: false,
                 user_id: '',
+                unfav: '',
             }
         },
         created() {
@@ -82,11 +83,12 @@
                     this.active = true
                 }else{
                     this.active = false
+                    this.unfav= false
                 }
                 
                 fetch("/api/cars/" + this.car.id +"/favourite", {
                     method: 'POST',
-                    body: JSON.stringify({user_id: this.user_id}),
+                    body: JSON.stringify({user_id: this.user_id, unfav:this.unfav}),
                     headers:{'X-CSRFToken': this.csrf_token,'Content-Type': 'application/json'},
                 })
                 .then((response) => response.json())
