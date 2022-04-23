@@ -60,7 +60,7 @@
         methods: {
             get_data(){
                 
-                fetch("/api/cars/" + this.$route.params.id +"/"+ this.$store.state.id, {
+                fetch("/api/cars/" + this.$route.params.id +"/"+ this.$store.state.uid, {
                     method: 'GET',
                 })
                 .then((response) => response.json())
@@ -113,7 +113,7 @@
                 })
             },
             sendid(){
-                this.user_id = this.$store.state.id
+                this.user_id = this.$store.state.uid
                 console.log("this is the id ", this.user_id )
             }
         }

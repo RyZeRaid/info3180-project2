@@ -15,13 +15,18 @@ const store = createStore({
           id: localStorage.getItem('id') || null,
           auth: localStorage.getItem('auth') || false,
           check: '',
+          uid: '',
       }
 
   },
   mutations:{
     checktrue(state, auth){
        state.check= auth
+       
     },
+    checkid(state, id){
+      state.uid = id
+    }
 
 
 },
@@ -45,6 +50,7 @@ router.beforeEach((to, from, next) => {
       localStorage.setItem('id', null );
       localStorage.setItem('auth', false );
       store.commit('checktrue', false);
+      store.commit('uid', '');
       console.log(store.state.check)
       window.location.reload();
       next('/');

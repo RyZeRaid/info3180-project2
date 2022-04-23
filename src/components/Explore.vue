@@ -43,7 +43,7 @@
                         </div>
                     </div>  
 
-                    <RouterLink class="a" v-bind:to="'/cars/' + car.id + '/'+ this.$store.state.id">
+                    <RouterLink class="a" v-bind:to="'/cars/' + car.id + '/'+ this.$store.state.uid">
                         <div class="card-footer">
                             View more details
                         </div>

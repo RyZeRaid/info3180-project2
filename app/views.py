@@ -35,11 +35,8 @@ def viewcar(id,user_id):
         for i in check_id:
             for x in check:
                 if x.car_id == i.car_id and x.user_id == i.user_id:
-                    print("was true")
                     fav = True
             
-    
-        
     print(cars)
     
     #carss = carsschema.dump(cars)

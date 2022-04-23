@@ -69,6 +69,8 @@ export default {
                 localStorage.setItem('token', data.token )
                 localStorage.setItem('id', data.id)
                 store.commit('checktrue', true);
+                store.commit('checkid', data.id )
+                
             }else{
                 
                 localStorage.setItem('token', null )
@@ -79,7 +81,7 @@ export default {
             localStorage.setItem('auth', data.auth )
             
             
-            console.log("show me the check :", store.state.check)
+            console.log("show me the check :", store.state.check, store.state.uid)
             console.log("this is the token in local storage",localStorage.getItem('id'))
             console.log(data.token, data.id,localStorage.getItem('auth') );
             
