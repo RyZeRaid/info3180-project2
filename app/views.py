@@ -19,19 +19,31 @@ from flask_wtf.csrf import generate_csrf
 # Routing for your application.
 ###
 
-@app.route('/api/cars/<int:id>', methods= ["POST","GET"])
-def viewcar(id):
+@app.route('/api/cars/<int:id>/<int:user_id>', methods= ["POST","GET"])
+def viewcar(id,user_id):
     carsschema = cars_schema(many = True)
-
+    fav = False
     cars =  Cars.query.get_or_404(id)
-
+    check = Favourites.query.filter_by(car_id = id).all()
+    check_id = Favourites.query.filter_by(user_id = user_id).all()
+    
+    if check_id == None and check == None:
+        fav = False
+    elif check_id == None :
+        fav = False
+    else:
+        for i in check_id:
+            for x in check:
+                if x.car_id == i.car_id and x.user_id == i.user_id:
+                    fav = True
+            
     print(cars)
-
+    
     #carss = carsschema.dump(cars)
 
     'id','description', 'make', 'model', 'color', 'year', 'transmission', 'car_type', 'price', 'photo'
 
-    return jsonify(make = cars.make, id = cars.id, description = cars.description, model = cars.model, color = cars.color, year = cars.year, transmission = cars.transmission, car_type = cars.car_type, price = cars.price, photo = cars.photo)
+    return jsonify(make = cars.make, id = cars.id, description = cars.description, model = cars.model, color = cars.color, year = cars.year, transmission = cars.transmission, car_type = cars.car_type, price = cars.price, photo = cars.photo,fav = fav)
 
 @app.route('/api/cars', methods=['GET'])
 def showcars():
@@ -165,6 +177,46 @@ def addcars():
 
 @app.route('/api/cars/<int:id>/favourite',methods= ["POST","GET"])
 def addfavcar(id):
+    unfav= request.json['unfav']
+    user_id = request.json['user_id']
+    check = Favourites.query.filter_by(car_id = id).all()
+    check_id = Favourites.query.filter_by(user_id = user_id).all()
+
+    fav = False
+
+    if unfav == False:
+        if check_id != None:
+            for i in check_id:
+                for x in check:
+                    if x.car_id == i.car_id and x.user_id == i.user_id:
+                        findunfav = Favourites.query.get_or_404(int(x.id))
+                        db.session.delete(findunfav)
+                        db.session.commit()
+                        return jsonify(fav = False)
+
+
+    carsschema = cars_schema()
+    
+    
+    
+    if check_id != None:
+        for i in check_id:
+            for x in check:
+                if x.car_id == i.car_id and x.user_id == i.user_id:
+                    return jsonify(fav = True)
+    else:
+        print("was here ")
+                
+    
+    print("this is thes user id", user_id)
+    cars =  Cars.query.filter_by(id = id).first()
+    
+    carss = carsschema.dump(cars)
+    
+    fav = Favourites(car_id = cars.id, user_id = user_id)
+    db.session.add(fav)
+    db.session.commit()
+
     return jsonify(message="This is the add to favourite of our API")   
 
 @app.route('/api/search',methods= ["POST","GET"])
@@ -175,7 +227,7 @@ def search():
     print("this isi the data", form.model.data)
     model = form.model.data
     make = form.make.data
-
+    cars = []
     if make == '' and model == '':
         cars =  Cars.query.all()
         carss = carsschema.dump(cars)
@@ -187,7 +239,15 @@ def search():
         cars =  Cars.query.filter(Cars.model.like('%'+ model +'%')).all()
         carss = carsschema.dump(cars)
     elif make != '' and model != '':
-        cars =  Cars.query.all()
+        car_make= Cars.query.filter(Cars.make.like('%'+ make +'%')).all()
+        car_model= Cars.query.filter(Cars.model.like('%'+ model +'%')).all()
+        if car_make != None and car_model != None:
+            for i in car_make:
+                for x in car_model:
+                    if x.model == i.model and x.make == i.make:
+                            cars.append(Cars.query.get_or_404(int(x.id)))
+        else:                    
+            cars =  Cars.query.all()
         carss = carsschema.dump(cars)
         return jsonify(carss)
     return jsonify(carss)
@@ -199,6 +259,7 @@ def viewuser(id):
 @app.route('/api/users/<int:id>/favourites',methods= ["POST","GET"])
 def getfavcar(id):
     
+
     return jsonify(message="This is the get users favourite cars of our API")
 
 @app.route('/api/csrf-token', methods=['GET'])

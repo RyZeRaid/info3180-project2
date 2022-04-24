@@ -46,7 +46,7 @@ const router = createRouter({
       component: () => import('../views/NewCarView.vue')
     },
     {
-      path: '/cars/:id',
+      path: '/cars/:id/:user_id',
       name: 'View Car',
       component: () => import('../views/ViewCarView.vue')
     },

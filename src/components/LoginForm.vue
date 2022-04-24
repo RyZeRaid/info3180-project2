@@ -66,20 +66,22 @@ export default {
           // display a success message
             if(data.token != ''){
                 
-                localStorage.setItem('token', data.token )
-                localStorage.setItem('id', data.id)
+                localStorage.setItem('token', data.token );
+                localStorage.setItem('id', data.id);
                 store.commit('checktrue', true);
+                store.commit('checkid', data.id );
+                
             }else{
                 
-                localStorage.setItem('token', null )
-                localStorage.setItem('id', null )
+                localStorage.setItem('token', null );
+                localStorage.setItem('id', null );
                 store.commit('checktrue', false);
             }
             
-            localStorage.setItem('auth', data.auth )
+            localStorage.setItem('auth', data.auth );
             
             
-            console.log("show me the check :", store.state.check)
+            console.log("show me the check :", store.state.check, store.state.uid)
             console.log("this is the token in local storage",localStorage.getItem('id'))
             console.log(data.token, data.id,localStorage.getItem('auth') );
             

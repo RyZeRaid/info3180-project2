@@ -42,44 +42,28 @@
                             {{ car.price }}        
                         </div>
                     </div>  
-
-                    <RouterLink class="a" v-bind:to="'/cars/' + car.id">
+                    <div v-if="this.$store.state.uid != '' ">
+                    <RouterLink class="a" v-bind:to="'/cars/' + car.id + '/'+ this.$store.state.uid">
+                       
                         <div class="card-footer">
                             View more details
                         </div>
                     </RouterLink>
+                    </div>
+                    <div v-else>
+                        <RouterLink class="a" v-bind:to="'/cars/' + car.id + '/'+ this.$store.state.id">
+                       
+                        <div class="card-footer">
+                            View more details
+                        </div>
+                    </RouterLink>
+                    </div>
                 </div>
             </div> 
             </div>
             </div>
     </div>
-    <div v-else>
-        <p>this is it </p>
-        <div class="container_view">
-    
-        <div v-for="car in cars" :key="car.id">
-            <div class = "grid_view">
-                <div class="card text-left" style="width: 18rem;">
-                    <img class="card-img-top" v-bind:src= "'/uploads/' + car.photo"  alt="Car" width="250" height="200">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ car.year }} {{ car.make }}</h5>
-                        <p>{{ car.model }}</p>
-                        <div class="bubble">
-                            {{ car.price }}        
-                        </div>
-                    </div>  
-
-                    <RouterLink class="a" v-bind:to="'/cars/' + car.id">
-                        <div class="card-footer">
-                            View more details
-                        </div>
-                    </RouterLink>
-                </div>
-            </div> 
-            </div>
-            </div>
-    </div>
-    
+   
     
 </template>
 
@@ -90,7 +74,6 @@
     data() {
         return {
           csrf_token: '',
-          cars: [],
           link: '',
           carsearch:[],
         };

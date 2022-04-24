@@ -16,6 +16,7 @@
                 <div class="flex">
                     <p>{{ car.price }}</p>
                     <p id="type">{{ car.car_type }}</p>
+                    
                 </div>
                     
                 
@@ -47,36 +48,53 @@
                 car: '',
                 selected: '',
                 button: true,
-                active: false
+                active: false,
+                user_id: '',
+                unfav: '',
+                
             }
         },
         created() {
+            this.getCsrfToken();
             this.get_data();
-            
+        
         },
         methods: {
             get_data(){
-                fetch("/api/cars/" + this.$route.params.id, {
-                    method: 'GET'
+                
+                this.$store.commit('getpath', window.location.pathname );
+                console.log("this is it ", this.$store.state.pa)
+                fetch("/api/cars/" + this.$route.params.id +"/"+ this.user_id, {
+                    method: 'GET',
                 })
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);
+                    
+                    if (this.active != true && data.fav == true){
+                        
+                        this.active = true
+                    }
                     this.car = data
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+
+                
             },
             fav(){
                 if(this.active != true) {
                     this.active = true
                 }else{
                     this.active = false
+                    this.unfav= false
                 }
                 
-                fetch("/api/cars/" + this.$route.params.id +"/favourite", {
-                    method: 'GET'
+                fetch("/api/cars/" + this.car.id +"/favourite", {
+                    method: 'POST',
+                    body: JSON.stringify({user_id: this.user_id, unfav:this.unfav}),
+                    headers:{'X-CSRFToken': this.csrf_token,'Content-Type': 'application/json'},
                 })
                 .then((response) => response.json())
                 .then((data) => {
@@ -87,7 +105,28 @@
                     console.log(error);
                 });
             },
-            
+             getCsrfToken(){
+                this.sendid()
+                
+                const user = this.$store.state.auth
+                console.log(user)
+                let self = this;
+                fetch('/api/csrf-token')
+                    .then((response) => response.json())
+                    .then((data) => {
+                    console.log(data);
+                    self.csrf_token = data.csrf_token;
+                })
+                
+            },
+            sendid(){
+                if(this.$store.state.uid != ''){
+                    this.user_id = this.$store.state.uid
+                }else{
+                    this.user_id = this.$store.state.id
+                }
+                console.log("this is the id ", this.user_id )
+            }
         }
         
     }    
