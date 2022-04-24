@@ -51,8 +51,8 @@ def showcars():
     carsschema = cars_schema(many = True)
 
     cars =  Cars.query.all()
-
-    carss = carsschema.dump(cars)
+    #print("testing last 3", cars[-3:])
+    carss = carsschema.dump(cars[-3:])
     return jsonify(carss)
 
 @app.route('/')
@@ -138,7 +138,6 @@ def addcar():
 @app.route('/api/auth/login',methods = ["POST","GET"])
 def login():
 
-
     print("got in function",request.method)
     res = {'status': 'success wasnt true'}
     form = LoginForm()
@@ -171,9 +170,6 @@ def logout():
     return jsonify(message="This is the logout of our API")
 
 
-@app.route('/api/cars', methods= ["POST","GET"])
-def addcars():
-    return jsonify(message="This is the addcars of our API")
 
 @app.route('/api/cars/<int:id>/favourite',methods= ["POST","GET"])
 def addfavcar(id):
@@ -197,8 +193,6 @@ def addfavcar(id):
 
     carsschema = cars_schema()
     
-    
-    
     if check_id != None:
         for i in check_id:
             for x in check:
@@ -207,7 +201,6 @@ def addfavcar(id):
     else:
         print("was here ")
                 
-    
     print("this is thes user id", user_id)
     cars =  Cars.query.filter_by(id = id).first()
     

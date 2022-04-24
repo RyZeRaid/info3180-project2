@@ -79,7 +79,7 @@
       <label for="photo">Upload Photo</label>
         <input class="form-control register-form" type="file" id="photo" name="photo" @change="selectImage">
     </div>
-    <input type="hidden" name="user_id" id="user_id" :value = "this.$store.state.id" >
+    <input type="hidden" name="user_id" id="user_id" :value = "this.$store.state.uid" >
   
   <br>
   <div class="col-12">
@@ -151,8 +151,12 @@ export default {
         })
     },
     sendid(){
-      this.user_id = this.$store.state.id
-      console.log("this is the id ", this.user_id )
+      if(this.$store.state.uid != ''){
+                    this.user_id = this.$store.state.uid
+                }else{
+                    this.user_id = this.$store.state.id
+                }
+                console.log("this is the id ", this.user_id )
     }
   }  
 }

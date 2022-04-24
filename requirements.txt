@@ -32,8 +32,8 @@ Flask-Login
 psycopg2
 python-dotenv
 flask_marshmallow
-
-
+flask_cors
+marshmallow-SQLAlchemy
 # ----------------------
 # Production Server
 # ----------------------

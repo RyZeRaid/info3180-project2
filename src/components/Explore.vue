@@ -50,14 +50,7 @@
                         </div>
                     </RouterLink>
                     </div>
-                    <div v-else>
-                        <RouterLink class="a" v-bind:to="'/cars/' + car.id + '/'+ this.$store.state.id">
-                       
-                        <div class="card-footer">
-                            View more details
-                        </div>
-                    </RouterLink>
-                    </div>
+                    
                 </div>
             </div> 
             </div>
@@ -107,6 +100,7 @@
             });
         },
         getCars(){
+            
             this.cars = []
       let self = this;
       fetch('/api/cars')

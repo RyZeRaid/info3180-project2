@@ -15,8 +15,8 @@ export default {
       <div id="text">
         <h2>Buy and Sell <br> Cars Online</h2>
         <p>United Auto Sales provies the fastest easiest firendly way to buy or sell cars online. Find a Great Price on the Vehicle on the Vehicle You Want.</p>
-        <button type="button" class="btn btn-primary" id="btn1">Register</button>
-        <button type="button" class="btn btn-success">Login</button>
+        <RouterLink type="button" to="/register" class="btn btn-primary" id="btn1">Register</RouterLink>
+        <RouterLink type="button" to="/login" class="btn btn-success">Login</RouterLink>
       </div>
       <div id="car">
         <img class="homeimg" src="../img/Car.jpg" alt="">

@@ -17,6 +17,7 @@ const store = createStore({
           check: '',
           uid: '',
           pa: '',
+          count: false,
       }
 
   },
@@ -31,24 +32,33 @@ const store = createStore({
     getpath(state, pat){
       state.pa = pat
     },
+    addcount(state){
+      if(store.state.check == ''){
+        state.count= true
+      }else{
+        state.count= false
+      }
 
+    },
 
 },
 
 });
 
 router.beforeEach((to, from, next) => {
-    console.log("came here actually ")
+    console.log("came here actually " )
+    
     console.log('fuh89f7gf', store.state.check)
     if(to.path === '/addcar' && store.state.check === ''){
       next('/login')
-    }else if(to.path === '/explore' && store.state.check === ''){
+    }else if(to.path === '/explore' && store.state.check === '' && store.state.count !== true){
       next('/login')
     }else if(to.path.includes('/cars') && store.state.check === ''){
       next('/login')
     }else{
       next()
     }
+    console.log("past the if else", to.path === '/explore' , store.state.check === '', store.state.count !== true)
     if(to.path === '/logout' && store.state.check === true){
       console.log("was loggged out");
       localStorage.setItem('token', null );
@@ -62,7 +72,7 @@ router.beforeEach((to, from, next) => {
 
 
     }
-    
+    store.commit('addcount');
   });
 const app = createApp(App)
 
