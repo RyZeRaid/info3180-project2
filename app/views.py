@@ -6,7 +6,7 @@ This file creates your application.
 """
 
 from app import app, db
-from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory,session
+from flask import render_template, request,jsonify, redirect, url_for,flash,send_from_directory,session,send_file
 import os
 from .models import Cars, Users, Favourites, cars_schema
 from .forms import addCarsForm, registerForm, LoginForm, SearchForm
@@ -84,7 +84,8 @@ def showcars():
 
 @app.route('/')
 def index():
-    return jsonify(message="This is the beginning of our API tedting")
+ return send_file(os.path.join('../dist/', 'index.html'))
+ 
 @app.route('/about')
 def about():
     return jsonify(message="This is the beginning of our testing thsi ")

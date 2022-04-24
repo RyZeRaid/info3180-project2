@@ -7,7 +7,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../dist/assets')
 app.config.from_object(Config)
 
 csrf = CSRFProtect(app)
