@@ -38,10 +38,6 @@ def getfavcar(id):
     print(cars)
     return jsonify(carss)
 
-
-
-    
-
 @app.route('/api/users/<int:id>',methods= ["POST","GET"])
 def viewuser(id):
     print(id)
@@ -83,7 +79,7 @@ def showcars():
 
     print(cars)
 
-    carss = carsschema.dump(cars)
+    carss = carsschema.dump(cars[-3:])
     return jsonify(carss)
 
 @app.route('/')

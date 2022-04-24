@@ -55,10 +55,12 @@ router.beforeEach((to, from, next) => {
       next('/login')
     }else if(to.path.includes('/cars') && store.state.check === '' && store.state.count !== true){
       next('/login')
+    }else if(to.path.includes('/myprofile') && store.state.check === '' && store.state.count !== true){
+      next('/login')
     }else{
       next()
     }
-    console.log("past the if else", to.path === '/explore' , store.state.check === '', store.state.count !== true)
+    
     if(to.path === '/logout' && store.state.check === true ){
       console.log("was loggged out");
       localStorage.setItem('token', null );
