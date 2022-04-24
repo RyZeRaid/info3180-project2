@@ -16,6 +16,7 @@ const store = createStore({
           auth: localStorage.getItem('auth') || false,
           check: '',
           uid: '',
+          pa: '',
       }
 
   },
@@ -26,7 +27,10 @@ const store = createStore({
     },
     checkid(state, id){
       state.uid = id
-    }
+    },
+    getpath(state, pat){
+      state.pa = pat
+    },
 
 
 },
@@ -40,8 +44,9 @@ router.beforeEach((to, from, next) => {
       next('/login')
     }else if(to.path === '/explore' && store.state.check === ''){
       next('/login')
-    }
-    else{
+    }else if(to.path.includes('/cars') && store.state.check === ''){
+      next('/login')
+    }else{
       next()
     }
     if(to.path === '/logout' && store.state.check === true){

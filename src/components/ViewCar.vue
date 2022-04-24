@@ -51,21 +51,26 @@
                 active: false,
                 user_id: '',
                 unfav: '',
+                
             }
         },
         created() {
-            this.get_data();
             this.getCsrfToken();
+            this.get_data();
+        
         },
         methods: {
             get_data(){
                 
-                fetch("/api/cars/" + this.$route.params.id +"/"+ this.$store.state.uid, {
+                this.$store.commit('getpath', window.location.pathname );
+                console.log("this is it ", this.$store.state.pa)
+                fetch("/api/cars/" + this.$route.params.id +"/"+ this.user_id, {
                     method: 'GET',
                 })
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);
+                    
                     if (this.active != true && data.fav == true){
                         
                         this.active = true
@@ -102,6 +107,7 @@
             },
              getCsrfToken(){
                 this.sendid()
+                
                 const user = this.$store.state.auth
                 console.log(user)
                 let self = this;
@@ -111,9 +117,14 @@
                     console.log(data);
                     self.csrf_token = data.csrf_token;
                 })
+                
             },
             sendid(){
-                this.user_id = this.$store.state.uid
+                if(this.$store.state.uid != ''){
+                    this.user_id = this.$store.state.uid
+                }else{
+                    this.user_id = this.$store.state.id
+                }
                 console.log("this is the id ", this.user_id )
             }
         }
