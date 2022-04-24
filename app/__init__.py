@@ -15,6 +15,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 CORS(app)
 ma = Marshmallow(app)
+db.create_all()
 # Flask-Login login manager
 login_manager = LoginManager(app)
 login_manager.init_app(app)
