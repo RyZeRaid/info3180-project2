@@ -49,17 +49,17 @@ router.beforeEach((to, from, next) => {
     console.log("came here actually " )
     
     console.log('fuh89f7gf', store.state.check)
-    if(to.path === '/addcar' && store.state.check === ''){
+    if(to.path === '/addcar' && store.state.check === '' && store.state.count !== true){
       next('/login')
     }else if(to.path === '/explore' && store.state.check === '' && store.state.count !== true){
       next('/login')
-    }else if(to.path.includes('/cars') && store.state.check === ''){
+    }else if(to.path.includes('/cars') && store.state.check === '' && store.state.count !== true){
       next('/login')
     }else{
       next()
     }
     console.log("past the if else", to.path === '/explore' , store.state.check === '', store.state.count !== true)
-    if(to.path === '/logout' && store.state.check === true){
+    if(to.path === '/logout' && store.state.check === true ){
       console.log("was loggged out");
       localStorage.setItem('token', null );
       localStorage.setItem('id', null );
