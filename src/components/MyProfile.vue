@@ -5,13 +5,13 @@
 
         <img class="card-img-sm-left profilepic" v-bind:src="'/uploads/' + user.photo" alt="Card image" width="140" height="140">
         <div class="card-body">
-                <h5  class="card-title">{{ user.name }}</h5>
-                <p>@{{ user.username }}</p>
+                <h3  class="card-title"> <span class="title"> {{ user.name }} </span></h3>
+                <h5>@ <span class="name"> {{ user.username }} </span> </h5>
                 <br>
                 <p>{{ user.biography }}</p>
-                <p>Email {{ user.email }}</p>
-                <p>Location {{ user.location}}</p>
-                <p>Joined {{ user.date_joined }}2</p>  
+                <p>Email <span class="email"> {{ user.email }} </span></p>
+                <p>Location <span class="location"> {{ user.location}} </span></p>
+                <p>Joined <span class="date"> {{ user.date_joined }} </span></p>  
         </div>
     </div>
     <br>
@@ -171,5 +171,24 @@
     justify-content: center;
     align-items: center;
 }
-
+.name{
+    font-weight: bold;
+    
+}
+.title{
+    font-weight: bold;
+    
+}
+.email{
+    font-weight: bold;
+    color:black;
+}
+.location{
+    font-weight: bold;
+    color:black;
+}
+.date{
+    font-weight: bold;
+    color:black;
+}
 </style>
