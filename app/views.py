@@ -19,6 +19,35 @@ from flask_wtf.csrf import generate_csrf
 # Routing for your application.
 ###
 
+@app.route('/api/users/<int:id>/favourites',methods= ["POST","GET"])
+def getfavcar(id):
+    
+    
+
+    cars = []
+
+    favs = Favourites.query.filter_by(user_id = id).all()
+
+    for fav in favs:
+        car = Cars.query.filter_by(id = fav.car_id).all()
+        print(car)
+        cars += (car)
+
+    carsschema = cars_schema(many = True)
+    carss = carsschema.dump(cars)
+    print(cars)
+    return jsonify(carss)
+
+
+
+    
+
+@app.route('/api/users/<int:id>',methods= ["POST","GET"])
+def viewuser(id):
+    print(id)
+    user = Users.query.get_or_404(id)
+    return jsonify(username = user.username, email = user.email, name = user.name, location = user.location, biography = user.biography, photo = user.photo, date_joined = user.date_joined)
+
 @app.route('/api/cars/<int:id>/<int:user_id>', methods= ["POST","GET"])
 def viewcar(id,user_id):
     carsschema = cars_schema(many = True)
@@ -51,6 +80,8 @@ def showcars():
     carsschema = cars_schema(many = True)
 
     cars =  Cars.query.all()
+
+    print(cars)
 
     carss = carsschema.dump(cars)
     return jsonify(carss)
@@ -251,16 +282,6 @@ def search():
         carss = carsschema.dump(cars)
         return jsonify(carss)
     return jsonify(carss)
-
-@app.route('/api/users/<int:id>',methods= ["POST","GET"])
-def viewuser(id):
-    return jsonify(message="This is the see users info of our API")
-
-@app.route('/api/users/<int:id>/favourites',methods= ["POST","GET"])
-def getfavcar(id):
-    
-
-    return jsonify(message="This is the get users favourite cars of our API")
 
 @app.route('/api/csrf-token', methods=['GET'])
 def get_csrf():

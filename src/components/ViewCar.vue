@@ -25,9 +25,9 @@
 
                 <div class = "d-flex flex-row bd-highlight mb-3">
                     <div class="flex">
-                         <p><i class="fa-solid fa-bed"></i> {{ car.color }} Bedrooms</p> 
+                         <p>{{ car.color }}</p> 
 
-                        <p id="distance"><i class="fa-solid fa-bath"></i> {{ car.transmission }} Bathrooms</p>
+                        <p id="distance">{{ car.transmission }}</p>
                     </div>  
                 </div>
                 
