@@ -33,7 +33,7 @@ const store = createStore({
       state.pa = pat
     },
     addcount(state){
-      if(store.state.check == ''){
+      if(store.state.check == '' && store.state.count !== false){
         state.count= true
       }else{
         state.count= false
@@ -49,13 +49,13 @@ router.beforeEach((to, from, next) => {
     console.log("came here actually " )
     
     console.log('fuh89f7gf', store.state.check)
-    if(to.path === '/addcar' && store.state.check === '' && store.state.count !== true){
+    if(to.path === '/addcar' && store.state.check === '' ){
       next('/login')
-    }else if(to.path === '/explore' && store.state.check === '' && store.state.count !== true){
+    }else if(to.path === '/explore' && store.state.check === false || to.path === '/explore' && store.state.check === '' ){
       next('/login')
-    }else if(to.path.includes('/cars') && store.state.check === '' && store.state.count !== true){
+    }else if(to.path.includes('/cars') && store.state.check === '' ){
       next('/login')
-    }else if(to.path.includes('/myprofile') && store.state.check === '' && store.state.count !== true){
+    }else if(to.path.includes('/myprofile') && store.state.check === '' ){
       next('/login')
     }else{
       next()
@@ -74,7 +74,7 @@ router.beforeEach((to, from, next) => {
 
 
     }
-    store.commit('addcount');
+    
   });
 const app = createApp(App)
 
