@@ -88,3 +88,4 @@ class Users(db.Model):
 class cars_schema(ma.Schema):
     class Meta:
         fields = ('id','description', 'make', 'model', 'color', 'year', 'transmission', 'car_type', 'price', 'photo', 'user_id')
+
