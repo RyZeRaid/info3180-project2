@@ -227,7 +227,7 @@ def search():
     print("this isi the data", form.model.data)
     model = form.model.data
     make = form.make.data
-
+    cars = []
     if make == '' and model == '':
         cars =  Cars.query.all()
         carss = carsschema.dump(cars)
@@ -239,7 +239,15 @@ def search():
         cars =  Cars.query.filter(Cars.model.like('%'+ model +'%')).all()
         carss = carsschema.dump(cars)
     elif make != '' and model != '':
-        cars =  Cars.query.all()
+        car_make= Cars.query.filter(Cars.make.like('%'+ make +'%')).all()
+        car_model= Cars.query.filter(Cars.model.like('%'+ model +'%')).all()
+        if car_make != None and car_model != None:
+            for i in car_make:
+                for x in car_model:
+                    if x.model == i.model and x.make == i.make:
+                            cars.append(Cars.query.get_or_404(int(x.id)))
+        else:                    
+            cars =  Cars.query.all()
         carss = carsschema.dump(cars)
         return jsonify(carss)
     return jsonify(carss)
