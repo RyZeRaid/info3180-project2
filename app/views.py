@@ -143,6 +143,7 @@ def addcar():
         year = form.year.data
         price = form.price.data
         filename = secure_filename(photo.filename)
+        print("this is the path", os.path.join(app.config['UPLOAD_FOLDER'], filename))
         photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         id = form.user_id.data
 
