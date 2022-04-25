@@ -96,9 +96,7 @@ def register():
     form = registerForm()
     user= None
     re =user
-    print("this is the method used for the csrf token", request.method)
-    print("this is the path", os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    gprint("this is it")
+    
     if form.validate_on_submit() and request.method == 'POST':
         description = form.description.data
         name = form.name.data
