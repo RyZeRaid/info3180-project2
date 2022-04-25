@@ -106,8 +106,7 @@ def register():
         password = form.password.data
         photo = form.photo.data
         filename = secure_filename(photo.filename)
-        print("this is the path", os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        print("this is it")
+        
         photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         user = Users(
                     biography=description,name=name, location=location,
@@ -120,7 +119,7 @@ def register():
         re= user
         return jsonify({
                             'message':'This is the register of our API ',
-                            'user' : user,
+                            
         })
     else:
         return jsonify(message= "error ", user = re)
